@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Песнь Льда и Пламени: Таблицы</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body class="{{ 'light-theme' if theme == 'light' else '' }}">
+    <button class="theme-toggle" onclick="toggleTheme()">
+        {{ '☀️ Light' if theme == 'dark' else '🌙 Dark' }}
+    </button>
+    <div class="container">
+        <div class="header-with-bg">
+            <div class="header-content">
+            <h1>Песнь Льда и Пламени</h1>
+            <a href="{{ url_for('export_csv') }}" class="export-button">Экспорт в CSV</a>
+                <a href="{{ url_for('home') }}" class="characters-button">Сравнение и Статистика</a>
+            </div>
+    </div>
+
+        <form method="POST">
+        <div class="slider-container">
+            <input type="range" min="1" max="4" step="1" value="{{ slider_value }}"
+                   class="slider" id="yearSlider" name="slider_value"
+                   onchange="this.form.submit()">
+            <div class="table-labels">
+                <span>Годы</span>
+                <span>Дома</span>
+                <span>Персонажи</span>
+                <span>Книги</span>
+            </div>
+        </div>
+        </form>
+
+        {% if plot_url %}
+        <div class="chart-container">
+            <img src="data:image/png;base64,{{ plot_url }}" alt="График смертности">
+        </div>
+        {% endif %}
+</div>
+    <script>
+        function toggleTheme() {
+            fetch('/toggle_theme').then(() => window.location.reload());
+        }
+    </script>
+</body>
+</html>

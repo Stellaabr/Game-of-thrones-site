@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Песнь Льда и Пламени: Анализ Битв</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{{ 'light-theme' if theme == 'light' else '' }}">
+    <button class="theme-toggle" onclick="toggleTheme()">
+        {{ '☀️ Light' if theme == 'dark' else '🌙 Dark' }}
+    </button>
+     <div class="container">
+        <div class="header-with-bg">
+    <div class="header-content">
+        <h1>Песнь Льда и Пламени</h1>
+         <a href="{{ url_for('tables') }}" class="characters-button">Таблицы</a>
+
+        <!-- Блок с топами королей -->
+        <div class="kings-top">
+            <div class="top-list">
+                <h3>Чаще атакуют короли:</h3>
+                <ol>
+                    {% for king, count in king_stats['attackers'] %}
+                    <li>{{ king }} <span>{{ count }}</span></li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="top-list">
+                <h3>Чаще защищаются короли:</h3>
+                <ol>
+                    {% for king, count in king_stats['defenders'] %}
+                    <li>{{ king }} <span>{{ count }}</span></li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <form method="POST">
+        <div class="slider-container">
+            <input type="range" min="298" max="300" step="1" value="{{ slider_value }}"
+                   class="slider" id="yearSlider" name="slider_value"
+                   onchange="this.form.submit()">
+            <div class="year-labels">
+                <span>298 год</span>
+                <span>299 год</span>
+                <span>300 год</span>
+            </div>
+        </div>
+        </form>
+        <div class="result-labels">
+            <span class="winner">ПОБЕДИТЕЛЬ</span>
+            <span class="loser">ПРОИГРАВШИЙ</span>
+        </div>
+
+        <div class="battles-list">
+            {% for battle in battles %}
+            <div class="battle-item">
+                <div class="battle-name">{{ battle['name'] }}</div>
+                <div class="houses-container">
+                    {% if battle['attacker_outcome'] == 'win' %}
+                        <div class="house winner-house">
+                            <img src="{{ url_for('static', filename='images/houses/' ~ battle['attacker_1'] ~ '.jpg') }}"
+                                 alt="{{ battle['attacker_1'] }}" class="house-img">
+                            <div class="other-names">{{ battle['attacker_1'] }}</div>
+                        </div>
+                        <div class="house loser-house">
+                            <img src="{{ url_for('static', filename='images/houses/' ~ battle['defender_1'] ~ '.jpg') }}"
+                                 alt="{{ battle['defender_1'] }}" class="house-img">
+                            <div class="other-names">{{ battle['defender_1'] }}</div>
+                        </div>
+                    {% else %}
+                        <div class="house loser-house">
+                            <img src="{{ url_for('static', filename='images/houses/' ~ battle['attacker_1'] ~ '.jpg') }}"
+                                 alt="{{ battle['attacker_1'] }}" class="house-img">
+                            <div class="other-names">{{ battle['attacker_1'] }}</div>
+                        </div>
+                        <div class="house winner-house">
+                            <img src="{{ url_for('static', filename='images/houses/' ~ battle['defender_1'] ~ '.jpg') }}"
+                                 alt="{{ battle['defender_1'] }}" class="house-img">
+                            <div class="other-names">{{ battle['defender_1'] }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+                 <div class="commanders-container">
+                        <div class="commander winner-commander">
+                            {% if battle['attacker_outcome'] == 'win' %}
+                                {{ battle['attacker_commander'] }}
+                            {% else %}
+                                {{ battle['defender_commander'] }}
+                            {% endif %}
+                        </div>
+                        <div class="commander loser-commander">
+                            {% if battle['attacker_outcome'] == 'win' %}
+                                {{ battle['defender_commander'] }}
+                            {% else %}
+                                {{ battle['attacker_commander'] }}
+                            {% endif %}
+                        </div>
+                 </div>
+                <div class="other-names">{{ battle['battle_type'] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function toggleTheme() {
+            fetch('/toggle_theme').then(() => window.location.reload());
+        }
+    </script>
+</body>
+</html>
