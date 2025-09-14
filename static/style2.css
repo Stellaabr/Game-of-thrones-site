@@ -1,0 +1,178 @@
+:root {
+    --background-color: #2e2e2e;
+    --text-color: #ffffff;
+    --header-bg: linear-gradient(to left, #2e2e2e 0%, rgba(46, 46, 46, 0.3));
+    --button-bg: #444;
+    --button-hover: #555;
+    --chart-bg: #3a3a3a;
+    --border-color: #444;
+}
+
+.light-theme {
+    --background-color: #ffffff;
+    --text-color: #2e2e2e;
+    --header-bg: linear-gradient(to left, #ffffff 0%, rgba(255, 255, 255, 0.3));
+    --button-bg: #e0e0e0;
+    --button-hover: #d0d0d0;
+    --chart-bg: #f0f0f0;
+    --border-color: #e0e0e0;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.header-with-bg {
+    background: var(--header-bg), url('/static/images/header.jpg') no-repeat right center;
+    background-size: cover;
+    min-height: 500px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    position: relative;
+}
+
+h1 {
+    margin-bottom: 20px;
+    max-width: 80%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+h1::after {
+    content: "Tаблицы и Анализ Персонажей";
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: var(--text-color);
+}
+
+.header-content {
+    max-width: 40%;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.characters-button {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    background-color: white;
+    color: #2e2e2e;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid white;
+}
+
+.characters-button:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.export-button {
+    display: inline-block;
+    background-color: #980C00;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    border: 2px solid #9B0C00;
+}
+
+.export-button:hover {
+    background-color: transparent;
+    color: #980C00;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: var(--button-bg);
+    outline: none;
+    border-radius: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--text-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.table-labels {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 40px;
+    color: var(--text-color);
+}
+
+.chart-container {
+    margin-top: 30px;
+    background-color: var(--chart-bg);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.chart-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.theme-toggle:hover {
+    background-color: var(--button-hover);
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: #ffffff;
+        --text-color: #2e2e2e;
+    }
+}
